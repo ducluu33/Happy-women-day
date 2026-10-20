@@ -1,0 +1,525 @@
+/* 20/10 Wish & Real Internet Meme Raffle Styles */
+.raffle-trigger {
+  position: absolute;
+  bottom: 24px;
+  right: 28px;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px 10px 12px;
+  background: linear-gradient(135deg, rgba(46, 26, 40, 0.94), rgba(28, 16, 25, 0.97));
+  border: 1px solid rgba(232, 165, 191, 0.6);
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 20px rgba(232, 165, 191, 0.35);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+  animation: raffle-gentle-pulse 3s ease-in-out infinite;
+}
+
+.raffle-trigger.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.raffle-trigger:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), 0 0 30px rgba(255, 150, 200, 0.65);
+  border-color: rgba(255, 200, 220, 0.9);
+}
+
+.raffle-trigger:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.raffle-trigger-icon {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7597, #c41454);
+  box-shadow: 0 4px 12px rgba(196, 20, 84, 0.4);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.raffle-trigger-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  padding: 1px 5px;
+  background: #ffd700;
+  color: #5c3800;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  animation: raffle-badge-bounce 1.5s infinite;
+}
+
+.raffle-trigger-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.raffle-trigger-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffc2d4;
+  text-transform: uppercase;
+}
+
+.raffle-trigger-sub {
+  font-size: 12px;
+  color: #ffdce6;
+  opacity: 0.9;
+}
+
+/* Modal Overlay */
+.raffle-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(14, 10, 16, 0.75);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.raffle-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Modal Card */
+.raffle-modal {
+  position: relative;
+  width: min(94vw, 500px);
+  max-height: min(94vh, 720px);
+  overflow-y: auto;
+  background: linear-gradient(155deg, #fffdfb 0%, #fff3f6 50%, #fef7ee 100%);
+  border-radius: 24px;
+  border: 2px solid #ffd5e2;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(255, 140, 180, 0.35);
+  padding: 28px 24px 24px;
+  color: #3b2029;
+  text-align: center;
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #f0c0ce transparent;
+}
+
+.raffle-overlay.is-open .raffle-modal {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Card Close Button */
+.raffle-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ebd0d8;
+  background: #fff;
+  color: #8c5364;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+  padding: 0;
+  z-index: 10;
+}
+
+.raffle-close-btn:hover {
+  background: #ff5277;
+  color: #fff;
+  border-color: #ff5277;
+  transform: rotate(90deg);
+}
+
+/* Header */
+.raffle-card-header {
+  margin-bottom: 14px;
+}
+
+.raffle-ribbon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #ff7597, #d92b5e);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 3px 10px rgba(217, 43, 94, 0.3);
+  margin-bottom: 8px;
+}
+
+.raffle-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #85183f;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.raffle-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ab516d;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Steps */
+.raffle-step {
+  display: none;
+  animation: raffle-fade-in 0.4s ease forwards;
+}
+
+.raffle-step.is-active {
+  display: block;
+}
+
+/* Step 1: Welcome */
+.raffle-welcome-art {
+  font-size: 50px;
+  line-height: 1;
+  margin: 14px 0 12px;
+  animation: raffle-bounce 2s ease-in-out infinite;
+}
+
+.raffle-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5a3843;
+  margin: 0 0 16px;
+}
+
+.raffle-highlight-box {
+  background: rgba(255, 235, 242, 0.75);
+  border: 1px dashed #e8a5bf;
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #7d2644;
+  line-height: 1.5;
+}
+
+/* Step 2: Meme & Wish Card */
+.raffle-wish-badge-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.raffle-wish-number-badge {
+  padding: 4px 12px;
+  background: #fdf2f8;
+  color: #b3164a;
+  border: 1px solid #f472b6;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.raffle-wish-theme-badge {
+  padding: 4px 12px;
+  background: #fefce8;
+  color: #854d0e;
+  border: 1px solid #facc15;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+/* Real Internet Meme Container */
+.raffle-meme-container {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border: 2px solid #ffd5e2;
+  margin: 0 auto 16px;
+  background: #0d0a12;
+  display: flex;
+  flex-direction: column;
+}
+
+.raffle-meme-header-bar {
+  padding: 6px 12px;
+  background: rgba(26, 16, 24, 0.95);
+  color: #ffdce6;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(232, 165, 191, 0.2);
+}
+
+.raffle-meme-img {
+  width: 100%;
+  max-height: 250px;
+  min-height: 160px;
+  object-fit: contain;
+  display: block;
+  background: #0d0a12;
+}
+
+.raffle-meme-caption-bar {
+  padding: 8px 12px;
+  background: rgba(18, 10, 16, 0.95);
+  color: #ffd700;
+  font-size: 12.5px;
+  font-weight: 800;
+  text-align: center;
+  border-top: 1px solid rgba(255, 215, 0, 0.25);
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+
+/* Wish Content */
+.raffle-wish-content {
+  background: #ffffff;
+  border: 1px solid #f3d0db;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  text-align: left;
+  box-shadow: 0 4px 14px rgba(220, 100, 140, 0.08);
+}
+
+.raffle-wish-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #9f1239;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.raffle-wish-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #4a2835;
+  margin: 0;
+}
+
+/* Actions Group */
+.raffle-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.raffle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.raffle-btn--primary {
+  background: linear-gradient(135deg, #e92e66, #b01045);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(186, 20, 75, 0.4);
+}
+
+.raffle-btn--primary:hover {
+  background: linear-gradient(135deg, #ff4178, #c71651);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(186, 20, 75, 0.5);
+}
+
+.raffle-btn--draw {
+  background: linear-gradient(135deg, #d946ef, #9333ea);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(147, 51, 234, 0.35);
+}
+
+.raffle-btn--draw:hover {
+  background: linear-gradient(135deg, #e879f9, #a855f7);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(147, 51, 234, 0.45);
+}
+
+.raffle-btn--copy {
+  background: #fdf2f8;
+  color: #9f1239;
+  border: 1px solid #f472b6;
+}
+
+.raffle-btn--copy:hover {
+  background: #fce7f3;
+  transform: translateY(-2px);
+}
+
+.raffle-btn--secondary {
+  background: #f5e4ea;
+  color: #78263f;
+  min-height: 42px;
+  font-size: 13.5px;
+}
+
+.raffle-btn--secondary:hover {
+  background: #eed5de;
+}
+
+/* Toast */
+.raffle-toast {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: rgba(17, 24, 39, 0.95);
+  color: #34d399;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+
+.raffle-toast.is-shown {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Confetti Container */
+.raffle-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10;
+  border-radius: 24px;
+}
+
+.raffle-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+}
+
+/* Keyframes */
+@keyframes raffle-gentle-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 20px rgba(232, 165, 191, 0.35);
+  }
+  50% {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55), 0 0 35px rgba(255, 140, 190, 0.65);
+  }
+}
+
+@keyframes raffle-badge-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes raffle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes raffle-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile & Portrait Orientation */
+@media (max-width: 600px) {
+  .raffle-trigger {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px 14px 8px 10px;
+  }
+  .raffle-trigger-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 19px;
+  }
+  .raffle-trigger-title {
+    font-size: 11.5px;
+  }
+  .raffle-trigger-sub {
+    font-size: 10.5px;
+  }
+  .raffle-modal {
+    padding: 22px 16px 18px;
+    border-radius: 20px;
+  }
+  .raffle-title {
+    font-size: 19px;
+  }
+  .raffle-meme-img {
+    max-height: 190px;
+  }
+  .raffle-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .raffle-trigger, .raffle-modal, .raffle-step, .raffle-welcome-art, .raffle-trigger-badge {
+    animation: none !important;
+    transition: none !important;
+  }
+}

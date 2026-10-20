@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b0a0a"/>
+      <stop offset="100%" stop-color="#0a060e"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="400" height="240" rx="16" fill="url(#bgGrad)" stroke="#ef4444" stroke-width="2" stroke-opacity="0.5"/>
+  <!-- Top Meme Header -->
+  <rect x="16" y="12" width="368" height="26" rx="6" fill="rgba(0,0,0,0.4)"/>
+  <text x="200" y="30" font-family="'Impact', 'Arial Black', sans-serif" font-size="13" font-weight="bold" fill="#ef4444" letter-spacing="1.5" text-anchor="middle" filter="url(#glow)">MAIN CHARACTER VIBES</text>
+  <!-- Artwork Graphic -->
+  <g id="artwork">
+    
+      <!-- Red carpet perspective -->
+      <polygon points="170,80 230,80 280,200 120,200" fill="#dc2626"/>
+      <line x1="170" y1="80" x2="120" y2="200" stroke="#fbbf24" stroke-width="4"/>
+      <line x1="230" y1="80" x2="280" y2="200" stroke="#fbbf24" stroke-width="4"/>
+      <!-- Confident Cheems walking -->
+      <circle cx="200" cy="95" r="32" fill="#f59e0b"/>
+      <ellipse cx="200" cy="135" rx="26" ry="32" fill="#d97706"/>
+      <circle cx="190" cy="90" r="4" fill="#000"/>
+      <circle cx="210" cy="90" r="4" fill="#000"/>
+      <ellipse cx="200" cy="102" rx="12" ry="8" fill="#fef3c7"/>
+      <!-- Petals falling -->
+      <g fill="#f43f5e">
+        <circle cx="150" cy="100" r="6"/>
+        <circle cx="250" cy="110" r="7"/>
+        <circle cx="140" cy="150" r="8"/>
+        <circle cx="260" cy="160" r="7"/>
+        <circle cx="170" cy="180" r="9"/>
+      </g>
+    
+  </g>
+  <!-- Bottom Meme Caption -->
+  <rect x="12" y="202" width="376" height="28" rx="6" fill="rgba(0,0,0,0.6)"/>
+  <text x="200" y="221" font-family="'Segoe UI', -apple-system, sans-serif" font-size="11.5" font-weight="800" fill="#ffffff" letter-spacing="0.5" text-anchor="middle">BƯỚC ĐI TỰ TIN - VẬN MAY NỞ RỘ</text>
+</svg>

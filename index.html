@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#19151d">
+  <meta name="description" content="Happy Women's Day Kim.">
+  <title>Happy Women's Day Kim</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='%23e8a5bf'%3E%3Cellipse cx='32' cy='21' rx='9' ry='17'/%3E%3Cellipse cx='32' cy='21' rx='9' ry='17' transform='rotate(72 32 32)'/%3E%3Cellipse cx='32' cy='21' rx='9' ry='17' transform='rotate(144 32 32)'/%3E%3Cellipse cx='32' cy='21' rx='9' ry='17' transform='rotate(216 32 32)'/%3E%3Cellipse cx='32' cy='21' rx='9' ry='17' transform='rotate(288 32 32)'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23efd58b'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/flowers.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/raffle.css">
+  <link rel="preload" href="img/letter-bg.png" as="image">
+  <script src="js/main.js" defer></script>
+  <script src="js/intro.js" defer></script>
+  <script src="js/raffle.js" defer></script>
+</head>
+<body class="intro-active">
+  <section id="letter-scene" aria-label="Phong thư dành cho bạn">
+    <div class="letter-stage">
+      <div class="letter-petals" aria-hidden="true"></div>
+      <div class="letter-wrapper">
+        <button class="letter-gift" id="open-letter" type="button" aria-label="Mở phong thư" aria-describedby="letter-hint" aria-controls="bouquet-scene">
+          <img src="img/love-message.png" alt="" width="170" height="170" draggable="false">
+        </button>
+        <p id="letter-hint">Nhấn để mở</p>
+      </div>
+      <div class="letter-confetti" aria-hidden="true"></div>
+      <div class="letter-flash" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <main id="bouquet-scene" tabindex="-1" aria-label="Bó hoa dành cho bạn" hidden>
+    <div class="bouquet-frame">
+      <div class="bouquet" role="img" aria-label="Bó 17 bông hoa gồm 3 bông hướng dương cùng hoa hồng tím, vàng, trắng hồng, tím oải hương, xanh da trời, cam đào và hồng san hô, có thân và lá trên thân, gói bằng giấy hồng và thắt nơ.">
+        <div class="halo" aria-hidden="true"></div>
+        <div class="paper paper--back" aria-hidden="true"></div>
+        <div id="flowers" aria-hidden="true"></div>
+        <div class="paper paper--left" aria-hidden="true"></div>
+        <div class="paper paper--right" aria-hidden="true"></div>
+        <div class="paper paper--fold" aria-hidden="true"></div>
+        <div class="ribbon" aria-hidden="true">
+          <span class="ribbon__tail ribbon__tail--left"></span>
+          <span class="ribbon__tail ribbon__tail--right"></span>
+          <span class="ribbon__loop ribbon__loop--left"></span>
+          <span class="ribbon__loop ribbon__loop--right"></span>
+          <span class="ribbon__knot"></span>
+        </div>
+        <div class="gift-tag" aria-hidden="true">For you<span>20.10</span></div>
+      </div>
+    </div>
+  </main>
+  <noscript><p class="no-script">Hãy bật JavaScript để ngắm bó hoa.</p></noscript>
+</body>
+</html>

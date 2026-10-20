@@ -1,0 +1,57 @@
+* { box-sizing: border-box; }
+body { position: relative; margin: 0; min-width: 280px; min-height: 100dvh; overflow: hidden; color: #f5e9e6; background: #19151d; font-family: "Segoe UI", Arial, sans-serif; }
+body::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, #49303b66, transparent 57%), radial-gradient(ellipse at 4% 95%, #34243155, transparent 55%); }
+#bouquet-scene { position: relative; display: grid; place-items: center; width: 100%; height: 100dvh; overflow: hidden; outline: none; }
+.bouquet-frame { position: relative; width: min(calc(100vw - 32px), calc((100dvh - 32px) * 1.0526316), 1000px); aspect-ratio: 800 / 760; }
+.bouquet { position: absolute; width: 800px; height: 760px; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--bouquet-scale, 0)); transform-origin: center; isolation: isolate; }
+.halo { position: absolute; width: 560px; height: 560px; top: 32px; left: 120px; background: radial-gradient(ellipse, #e5a8bd0d, transparent 70%); border: 1px solid #dfafbf09; border-radius: 50%; }
+/* Below the rim, stems and leaves stay inside the wrapping silhouette. */
+#flowers { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 100% 422px, 610px 422px, 520px 712px, 298px 712px, 178px 422px, 0 422px); }
+.flower { position: absolute; left: calc(50% + var(--offset)); bottom: 140px; font-size: 7px; width: 1.5em; transform: translateX(-50%) rotate(var(--angle)); transform-origin: 50% 100%; z-index: var(--layer); }
+.flower__line { position: relative; height: var(--stem); animation: stem-grow 1.6s cubic-bezier(.2,.7,.2,1) var(--delay) both; transform-origin: bottom center; }
+.flower__leafs { position: relative; z-index: 2; animation: flower-open 1.5s cubic-bezier(.2,.7,.2,1) calc(var(--delay) + .7s) both; }
+.flower__leafs::after { content: ""; position: absolute; width: 12em; height: 12em; left: 0; bottom: -3em; background: #f6a5c514; border-radius: 50%; filter: blur(4em); pointer-events: none; }
+.flower__line__leaf { --w: 5em; --h: 7em; }
+/* Anchor each leaf by its base; fixed percentage offsets detach smaller leaves. */
+.flower .flower__line .flower__line__leaf { left: auto; right: 50%; transform-origin: 100% 100%; }
+.flower .flower__line .flower__line__leaf--3, .flower .flower__line .flower__line__leaf--4 { left: 50%; right: auto; transform-origin: 0 100%; }
+.flower--sunflower { width: 2em; }
+.flower--sunflower .flower__leaf { top: 0; bottom: auto; transform: translate(-50%, -50%) rotate(var(--petal-angle)); transform-origin: center; }
+.flower--sunflower .flower__white-circle { z-index: 3; left: 50%; top: 0; transform: translate(-50%, -50%); }
+.flower--sunflower .flower__white-circle::after { left: 50%; top: 50%; }
+.flower--sunflower .flower__leafs::after { background: #ffcc5010; }
+.flower--gift .flower__line__leaf--4, .flower--sunflower .flower__line__leaf--4 { top: 40%; }
+.flower[data-color="lavender"] { --petal-base: #7955b5; --petal-tip: #dfc7ff; }
+.flower[data-color="sky"] { --petal-base: #398abd; --petal-tip: #c2efff; }
+.flower[data-color="peach"] { --petal-base: #e27b54; --petal-tip: #ffd2b5; }
+.flower[data-color="coral"] { --petal-base: #bf415b; --petal-tip: #ff9aaf; }
+.flower[data-color] .flower__leaf { background-color: var(--petal-base); background-image: linear-gradient(to top, var(--petal-base), var(--petal-tip)); }
+.flower[data-color] .flower__white-circle { background-color: #fff4d8; }
+.flower[data-color] .flower__white-circle::after { background-image: radial-gradient(ellipse, #f6ce67, #e6a72e); }
+.paper { position: absolute; pointer-events: none; }
+.paper--back { z-index: 0; inset: 280px 168px 48px; background: linear-gradient(115deg, #d9b6aa, #ebd2c2 38%, #bb8f87 80%); clip-path: polygon(1% 5%, 44% 14%, 78% 0, 100% 24%, 66% 100%, 43% 96%); }
+.paper--left { z-index: 20; left: 178px; top: 422px; width: 260px; height: 290px; background: linear-gradient(112deg, #e5beb6, #cc9c9e 56%, #b7808a); clip-path: polygon(0 0, 100% 35%, 76% 100%, 46% 96%); }
+.paper--right { z-index: 21; left: 372px; top: 422px; width: 238px; height: 290px; background: linear-gradient(244deg, #eacac2, #d4a4a4 54%, #b88390); clip-path: polygon(100% 0, 73% 66%, 28% 100%, 0 96%, 0 38%); }
+.paper--fold { z-index: 22; left: 298px; top: 499px; width: 176px; height: 213px; background: linear-gradient(110deg, #dfb5b2, #d1a0a6 60%, #bd8d97); clip-path: polygon(0 0, 100% 44%, 42% 100%, 18% 94%); }
+.ribbon { position: absolute; left: 396px; top: 598px; z-index: 23; width: 0; height: 0; transform: rotate(-8deg); }
+.ribbon__loop { position: absolute; bottom: -4px; width: 90px; height: 45px; border: 1px solid #a45e76; box-shadow: inset 0 3px 9px #f0a8ba4d, 0 3px 5px #56303e22; }
+.ribbon__loop--left { right: 0; border-radius: 9px 65% 5px 65%; transform: rotate(17deg); background: linear-gradient(165deg, #be6e88, #9b4c68 72%, #d38a9f); }
+.ribbon__loop--right { left: 0; border-radius: 65% 9px 65% 5px; transform: rotate(-17deg); background: linear-gradient(20deg, #b96380, #8e425d 72%, #d38a9f); }
+.ribbon__tail { position: absolute; width: 32px; height: 120px; top: 0; transform-origin: top center; background: linear-gradient(90deg, #8f425f, #c47892 52%, #ad5c79); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%); }
+.ribbon__tail--left { left: -16px; transform: rotate(23deg); }
+.ribbon__tail--right { left: -12px; transform: rotate(-30deg); height: 100px; }
+.ribbon__knot { position: absolute; left: -14px; top: -14px; width: 28px; height: 26px; border-radius: 9px; background: linear-gradient(100deg, #a05170, #d48ba2, #a05170); box-shadow: 0 2px 5px #52303e66; }
+.gift-tag { position: absolute; z-index: 24; left: 474px; top: 530px; width: 72px; height: 96px; background: #f5e7d8; color: #885e69; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; transform: rotate(12deg); font: italic 18px Georgia, "Times New Roman", serif; box-shadow: 0 4px 12px #1e121522; }
+.gift-tag::before { content: ""; position: absolute; width: 1px; height: 48px; background: #f0d7bf; left: 32px; bottom: calc(100% - 8px); transform: rotate(-25deg); transform-origin: bottom; }
+.gift-tag span { font: 9px "Segoe UI", Arial, sans-serif; letter-spacing: 2px; }
+.no-script { position: relative; text-align: center; color: #ead1d9; }
+@keyframes stem-grow { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes flower-open { from { transform: scale(0) rotate(-12deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+/* Match the letter scene's landscape orientation on portrait phones. */
+@media (orientation: portrait) {
+  #bouquet-scene { position: fixed; width: 100dvh; height: 100dvw; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(90deg); }
+  .bouquet-frame { width: min(calc(100dvh - 32px), calc((100dvw - 32px) * 1.0526316), 1000px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
